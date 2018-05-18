@@ -46,8 +46,8 @@ void ShotInit(void) {
 
 //Ž©‹@‚Ì•`‰æ
 void PlayerDraw(void) {
-	DrawGraph(Hina.x, Hina.y, Hina.img[Anm/2], TRUE);
-	(Anm < 8) ? Anm++ : Anm = 0;
+	DrawGraph(Hina.x, Hina.y, Hina.img[Anm], TRUE);
+	(Anm < 3) ? Anm++ : Anm = 0;
 	DrawFormatString(0, 554, GetColor(255, 255, 255), "%-3d", ShotDelay);
 	DrawFormatString(0, 577, GetColor(255, 255, 255), "%-3d,%-3d", Hina.x,Hina.y);
 }
