@@ -7,7 +7,7 @@ Chara Hina;
 int speed=8;	//自機の移動速度
 int ShotDelay=6;	//ショットの間隔(PlayerShotにもあるよ)
 int Anm = 0;
-Chara Shot[ShotMAX][5];
+Shots Shot[ShotMAX][5];
 
 void PlayerDraw(void);
 void PlayerMove(void);
@@ -31,15 +31,16 @@ void PlayerInit(void) {
 	Hina.x = 5;
 	Hina.y = 295;
 	Hina.hp = 100;	//なんとなく100にした
-	Hina.power = 85;
+	Hina.power = 128;
 	Hina.live = true;
 }
 //ショットの初期化
 void ShotInit(void) {
 	for (int i = 0; i < ShotMAX; i++) {
 		for (int n = 0; n < 5; n++) {
+			Shot[i][n].x = 0, Shot[i][n].y = 0;
 			Shot[i][n].live = false;
-			Shot[i][n].img[0] = LoadGraph("res/img/nife.png");
+			Shot[i][n].img = LoadGraph("res/img/nife.png");
 		}
 	}
 }
@@ -56,7 +57,7 @@ void PShotDraw(void) {
 	for (int i = 0; i < ShotMAX; i++) {
 		for (int n = 0; n < 5; n++) {
 			if (Shot[i][n].live) {
-				DrawGraph(Shot[i][n].x, Shot[i][n].y, Shot[i][n].img[0], TRUE);
+				DrawRotaGraph(Shot[i][n].x, Shot[i][n].y, 1.0, Shot[i][n].angle, Shot[i][n].img, TRUE);
 			}
 		}
 	}
@@ -95,7 +96,7 @@ void PShotMove(void) {
 				}
 			}
 		}
-		//5wayぶん繰り返す
+		//3wayぶん繰り返す
 		for (int n = 0; n < 3; n++) {
 			if (Shot[i][n].live) {
 				Shot[i][n].x += 50;	//移動量
@@ -107,8 +108,8 @@ void PShotMove(void) {
 		//5wayぶん繰り返す
 		for (int n = 0; n < 5; n++) {
 			if (Shot[i][n].live) {
-				Shot[i][n].x += cos(n*10*PI/180.0)*50;	//移動量
-				Shot[i][n].y += sin(n*10*PI / 180.0) * 50;
+				Shot[i][n].x += cos(Shot[i][n].angle) * 50;	//移動量
+				Shot[i][n].y += sin(Shot[i][n].angle) * 50;
 				if (Shot[i][n].x > 800) {
 					Shot[i][n].live = false;
 				}
@@ -126,11 +127,12 @@ void PlayerShot(void) {
 		//5way弾
 		for (int i = 0; i < ShotMAX; i++) {
 			for (int n = 0; n < 5; n++) {
-				if (Shot[i][n].live == false) {
+				if (!Shot[i][n].live) {
 					Shot[i][n].live = true;
 					Shot[i][n].x = Hina.x;
 					Shot[i][n].y = Hina.y + 5;
-					return;
+					Shot[i][n].angle = (n - 1) * 10 * PI / 180.0;
+					//return;
 				}
 			}
 		}
@@ -143,7 +145,6 @@ void PlayerShot(void) {
 					Shot[i][n].live = true;
 					Shot[i][n].x = Hina.x;
 					Shot[i][n].y = Hina.y + 5;
-					return;
 				}
 			}
 		}
@@ -155,8 +156,31 @@ void PlayerShot(void) {
 				Shot[i][0].live = true;
 				Shot[i][0].x = Hina.x;
 				Shot[i][0].y = Hina.y+5;
-				return;
 			}
 		}
 	}
+}
+
+//自機情報を他のソースで使うための関数
+int GetPlayerInfo(int index) {
+	int result;
+	switch (index) {
+	case 0:
+		//X座標
+		result = Hina.x;
+		break;
+	case 1:
+		//Y座標
+		result = Hina.y;
+		break;
+	case 2:
+		//Power
+		result = Hina.power;
+		break;
+	case 3:
+		//HP
+		result = Hina.hp;
+		break;
+	}
+	return result;
 }

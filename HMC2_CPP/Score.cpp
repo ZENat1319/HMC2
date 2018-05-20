@@ -23,7 +23,7 @@ void ScoreDraw(void) {
 	DrawFormatString(73, 3, GetColor(255,255,255), "%08d", HighScore, ScorebarFont);
 	DrawFormatString(73, 30, GetColor(255, 255, 255), "%08d", Score, ScorebarFont);
 	DrawFormatString(211, 30, GetColor(255, 255, 255), "%08d", Graze, ScorebarFont);
-	DrawFormatString(447, 3, GetColor(255, 255, 255), "%-d", Power, ScorebarFont);
+	DrawFormatString(447, 3, GetColor(255, 255, 255), "%-d", GetPlayerInfo(2), ScorebarFont);
 	if (Bombs < 5) {
 		//ƒ{ƒ€‚ª‚SŒÂˆÈ‰º
 		for (int i = 0; i < Bombs; i++) {

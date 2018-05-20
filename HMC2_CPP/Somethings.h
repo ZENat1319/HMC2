@@ -22,6 +22,14 @@ extern struct Chara
 	int power;	//ÉpÉèÅ[
 	int other = 0;	//ÇªÇÃëº
 };
+extern struct Shots {
+	int img;
+	int x, y;
+	double angle;	//äpìx
+	bool live;
+	int power;
+	int other;
+};
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow);
 
@@ -38,6 +46,7 @@ void GameMain(void);
 void PlayerInit(void);
 void ShotInit(void);
 void PlayerDo(void);
+int GetPlayerInfo(int);
 
 void ScoreInit(void);
 void ScoreDraw(void);
