@@ -65,11 +65,19 @@ void PShotDraw(void) {
 
 //自機の移動
 void PlayerMove(void) {
+	//ゲームパッドのいろいろ
+	int Pad;
+	Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+
 	//移動
-	if (Key[KEY_INPUT_UP] >= 1)Hina.y -= speed;
+	/*if (Key[KEY_INPUT_UP] >= 1)Hina.y -= speed;
 	if (Key[KEY_INPUT_DOWN] >= 1)Hina.y += speed;
 	if (Key[KEY_INPUT_LEFT] >= 1)Hina.x -= speed;
-	if (Key[KEY_INPUT_RIGHT] >= 1)Hina.x += speed;
+	if (Key[KEY_INPUT_RIGHT] >= 1)Hina.x += speed;*/
+	if (Pad&PAD_INPUT_UP)Hina.y -= speed;
+	if (Pad&PAD_INPUT_DOWN)Hina.y += speed;
+	if (Pad&PAD_INPUT_LEFT)Hina.x -= speed;
+	if (Pad&PAD_INPUT_RIGHT)Hina.x += speed;
 	//移動範囲
 	if (Hina.x < 0)Hina.x = 0;
 	if (Hina.x > 800 - PSIZE_X)Hina.x = 800 - PSIZE_X;
@@ -81,7 +89,8 @@ void PlayerMove(void) {
 	else speed = 8;
 
 	//ショット
-	if(Key[KEY_INPUT_Z]>=1)PlayerShot();
+	//if(Key[KEY_INPUT_Z]>=1)PlayerShot();
+	if (Pad&PAD_INPUT_A)PlayerShot();
 }
 //ショットの移動
 void PShotMove(void) {

@@ -4,6 +4,7 @@ void TitleKey(void);
 
 int TitleLogo;
 int CursorY;
+int PadOn = 0;
 int MenuFont,MenuFont2;
 
 //タイトル画面初期化
@@ -53,14 +54,17 @@ void TitleMain(void) {
 }
 
 void TitleKey(void) {
+	int Pad;
+	Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+
 	//カーソル移動
-	if (Key[KEY_INPUT_UP] == 1)CursorY -= 25;
-	if (Key[KEY_INPUT_DOWN] == 1)CursorY += 25;
-	if (Key[KEY_INPUT_ESCAPE] == 1)CursorY = 100;
+	if (PadOn == 0 && Pad & PAD_INPUT_UP)CursorY -= 25;
+	if (PadOn == 0 && Pad & PAD_INPUT_DOWN)CursorY += 25;
+	if (PadOn == 0 && Key[KEY_INPUT_ESCAPE] == 1)CursorY = 100;
 	if (CursorY > 100)CursorY = 0;
 	if (CursorY < 0)CursorY = 100;
 
-	if (Key[KEY_INPUT_Z] == 1|| Key[KEY_INPUT_RETURN] == 1) {
+	if (PadOn == 0 && Pad&PAD_INPUT_A|| Key[KEY_INPUT_RETURN] == 1) {
 		switch (CursorY) {
 		case 0:
 			//START
@@ -72,4 +76,6 @@ void TitleKey(void) {
 			break;
 		}
 	}
+	if (Pad != 0)PadOn++;
+	if (Pad == 0)PadOn = 0;
 }
