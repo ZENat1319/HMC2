@@ -138,8 +138,9 @@ void PlayerShot(void) {
 				Shot[i].x = Hina.x;
 				Shot[i].y = Hina.y + 10;
 				Shot[i].angle = (n - 2) * 10 * PI / 180.0;
-				(n < 4) ? n++ : n = 0;
+				n++;
 			}
+			if (n >= 5)break;
 		}
 	}
 	else if (Hina.power >= 43) {	//HALF
