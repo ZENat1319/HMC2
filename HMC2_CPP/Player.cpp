@@ -6,6 +6,7 @@
 Chara Hina;
 int speed=8;	//自機の移動速度
 int ShotDelay=6;	//ショットの間隔(PlayerShotにもあるよ)
+int ShotSum = 0;
 int Anm = 0;
 Shots Shot[ShotMAX];
 
@@ -47,7 +48,7 @@ void ShotInit(void) {
 void PlayerDraw(void) {
 	DrawGraph(Hina.x, Hina.y, Hina.img[Anm], TRUE);
 	(Anm < 3) ? Anm++ : Anm = 0;
-	DrawFormatString(0, 554, GetColor(255, 255, 255), "%-3d", ShotDelay);
+	DrawFormatString(0, 554, GetColor(255, 255, 255), "%-3d", ShotSum);
 	DrawFormatString(0, 577, GetColor(255, 255, 255), "%-3d,%-3d", Hina.x,Hina.y);
 }
 //ショットの描画
@@ -87,6 +88,7 @@ void PlayerMove(void) {
 	//ショット
 	//if(Key[KEY_INPUT_Z]>=1)PlayerShot();
 	if (Pad&PAD_INPUT_A)PlayerShot();
+	if (!(Pad&PAD_INPUT_A))ShotDelay = 0;
 }
 //ショットの移動
 void PShotMove(void) {
@@ -113,8 +115,9 @@ void PShotMove(void) {
 		if (Shot[i].live) {
 			Shot[i].x += cos(Shot[i].angle) * 50;	//移動量
 			Shot[i].y += sin(Shot[i].angle) * 50;
-			if (Shot[i].x > 800) {
+			if (Shot[i].x > 800||Shot[i].y<50 || Shot[i].y>600) {
 				Shot[i].live = false;
+				ShotSum--;
 			}
 		}
 	}
@@ -130,10 +133,11 @@ void PlayerShot(void) {
 		//5way弾
 		for (int i = 0; i < ShotMAX; i++) {
 			if (!Shot[i].live) {
+				ShotSum++;
 				Shot[i].live = true;
 				Shot[i].x = Hina.x;
-				Shot[i].y = Hina.y + 5;
-				Shot[i].angle = (i - 1) * 10 * PI / 180.0;
+				Shot[i].y = Hina.y + 10;
+				Shot[i].angle = (n - 2) * 10 * PI / 180.0;
 				(n < 4) ? n++ : n = 0;
 			}
 		}
