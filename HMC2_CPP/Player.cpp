@@ -32,7 +32,7 @@ void PlayerInit(void) {
 	Hina.x = 5;
 	Hina.y = 295;
 	Hina.hp = 100;	//‚È‚ñ‚Æ‚È‚­100‚É‚µ‚½
-	Hina.power = 128;
+	Hina.power = 50;
 	Hina.live = true;
 }
 //ƒVƒ‡ƒbƒg‚Ì‰Šú‰»
@@ -146,23 +146,29 @@ void PlayerShot(void) {
 	else if (Hina.power >= 43) {	//HALF
 		//3way’e
 		for (int i = 0; i < ShotMAX; i++) {
-			for (int n = 0; n < 3; n++) {
-				if (Shot[i].live == false) {
-					Shot[i].live = true;
-					Shot[i].x = Hina.x;
-					Shot[i].y = Hina.y + 5;
-				}
+			if (!Shot[i].live) {
+				ShotSum++;
+				Shot[i].live = true;
+				Shot[i].x = Hina.x;
+				Shot[i].y = Hina.y + 10;
+				Shot[i].angle = (n - 1) * 10 * PI / 180.0;
+				n++;
 			}
+			if (n >= 3)break;
 		}
 	}
 	else {	//MIN
 		//1way’e
 		for (int i = 0; i < ShotMAX; i++) {
-			if (Shot[i].live == false) {
+			if (!Shot[i].live) {
+				ShotSum++;
 				Shot[i].live = true;
 				Shot[i].x = Hina.x;
-				Shot[i].y = Hina.y+5;
+				Shot[i].y = Hina.y + 10;
+				Shot[i].angle = n * 10 * PI / 180.0;
+				n++;
 			}
+			if (n >= 1)break;
 		}
 	}
 }
