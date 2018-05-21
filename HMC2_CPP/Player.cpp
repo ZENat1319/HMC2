@@ -7,7 +7,7 @@ Chara Hina;
 int speed=8;	//自機の移動速度
 int ShotDelay=6;	//ショットの間隔(PlayerShotにもあるよ)
 int Anm = 0;
-Shots Shot[ShotMAX][5];
+Shots Shot[ShotMAX];
 
 void PlayerDraw(void);
 void PlayerMove(void);
@@ -37,11 +37,9 @@ void PlayerInit(void) {
 //ショットの初期化
 void ShotInit(void) {
 	for (int i = 0; i < ShotMAX; i++) {
-		for (int n = 0; n < 5; n++) {
-			Shot[i][n].x = 0, Shot[i][n].y = 0;
-			Shot[i][n].live = false;
-			Shot[i][n].img = LoadGraph("res/img/nife.png");
-		}
+		Shot[i].x = 0, Shot[i].y = 0;
+		Shot[i].live = false;
+		Shot[i].img = LoadGraph("res/img/nife.png");
 	}
 }
 
@@ -55,10 +53,8 @@ void PlayerDraw(void) {
 //ショットの描画
 void PShotDraw(void) {
 	for (int i = 0; i < ShotMAX; i++) {
-		for (int n = 0; n < 5; n++) {
-			if (Shot[i][n].live) {
-				DrawRotaGraph(Shot[i][n].x, Shot[i][n].y, 1.0, Shot[i][n].angle, Shot[i][n].img, TRUE);
-			}
+		if (Shot[i].live) {
+			DrawRotaGraph(Shot[i].x, Shot[i].y, 1.0, Shot[i].angle, Shot[i].img, TRUE);
 		}
 	}
 }
@@ -114,14 +110,11 @@ void PShotMove(void) {
 				}
 			}
 		*/
-		//5wayぶん繰り返す
-		for (int n = 0; n < 5; n++) {
-			if (Shot[i][n].live) {
-				Shot[i][n].x += cos(Shot[i][n].angle) * 50;	//移動量
-				Shot[i][n].y += sin(Shot[i][n].angle) * 50;
-				if (Shot[i][n].x > 800) {
-					Shot[i][n].live = false;
-				}
+		if (Shot[i].live) {
+			Shot[i].x += cos(Shot[i].angle) * 50;	//移動量
+			Shot[i].y += sin(Shot[i].angle) * 50;
+			if (Shot[i].x > 800) {
+				Shot[i].live = false;
 			}
 		}
 	}
@@ -132,17 +125,16 @@ void PlayerShot(void) {
 	ShotDelay -= 1;
 	if (ShotDelay > 0)return;
 	ShotDelay = 6;
+	int n = 0;
 	if (Hina.power >= 85) {	//MAX
 		//5way弾
 		for (int i = 0; i < ShotMAX; i++) {
-			for (int n = 0; n < 5; n++) {
-				if (!Shot[i][n].live) {
-					Shot[i][n].live = true;
-					Shot[i][n].x = Hina.x;
-					Shot[i][n].y = Hina.y + 5;
-					Shot[i][n].angle = (n - 1) * 10 * PI / 180.0;
-					//return;
-				}
+			if (!Shot[i].live) {
+				Shot[i].live = true;
+				Shot[i].x = Hina.x;
+				Shot[i].y = Hina.y + 5;
+				Shot[i].angle = (i - 1) * 10 * PI / 180.0;
+				(n < 4) ? n++ : n = 0;
 			}
 		}
 	}
@@ -150,10 +142,10 @@ void PlayerShot(void) {
 		//3way弾
 		for (int i = 0; i < ShotMAX; i++) {
 			for (int n = 0; n < 3; n++) {
-				if (Shot[i][n].live == false) {
-					Shot[i][n].live = true;
-					Shot[i][n].x = Hina.x;
-					Shot[i][n].y = Hina.y + 5;
+				if (Shot[i].live == false) {
+					Shot[i].live = true;
+					Shot[i].x = Hina.x;
+					Shot[i].y = Hina.y + 5;
 				}
 			}
 		}
@@ -161,10 +153,10 @@ void PlayerShot(void) {
 	else {	//MIN
 		//1way弾
 		for (int i = 0; i < ShotMAX; i++) {
-			if (Shot[i][0].live == false) {
-				Shot[i][0].live = true;
-				Shot[i][0].x = Hina.x;
-				Shot[i][0].y = Hina.y+5;
+			if (Shot[i].live == false) {
+				Shot[i].live = true;
+				Shot[i].x = Hina.x;
+				Shot[i].y = Hina.y+5;
 			}
 		}
 	}
