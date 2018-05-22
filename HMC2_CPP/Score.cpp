@@ -1,6 +1,7 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Somethings.h"
 
-int Scorebar;
+int ScorebarImg;
 int BombIcon;
 int Score = 0;
 int HighScore = 0;
@@ -11,19 +12,30 @@ int Bombs=3;
 int ScorebarFont;
 
 void ScoreInit(void) {
-	Scorebar = LoadGraph("res/img/scorebar.bmp");
+	ScorebarImg = LoadGraph("res/img/scorebar.bmp");
 	BombIcon = LoadGraph("res/img/bomb_icon.bmp");
-	ScorebarFont = CreateFontToHandle("Source Han Serif", 26, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
+	ScorebarFont = CreateFontToHandle("Source Han Serif", 14.5, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 }
 
 void ScoreDraw(void) {
-	DrawGraph(0, 0, Scorebar, TRUE);
+	DrawGraph(0, 0, ScorebarImg, TRUE);
 	DrawLine(0, 50, 800, 50, GetColor(255, 0, 0));
 
-	DrawFormatString(73, 3, GetColor(255,255,255), "%08d", HighScore, ScorebarFont);
+	char scorebar[256];
+
+	sprintf(scorebar, "%08d", HighScore);
+	DrawStringToHandle(73,3,scorebar, GetColor(255, 255, 255),ScorebarFont);
+	sprintf(scorebar, "%08d", Score);
+	DrawStringToHandle(73, 30, scorebar, GetColor(255, 255, 255), ScorebarFont);
+	sprintf(scorebar, "%08d", Graze);
+	DrawStringToHandle(211, 30, scorebar, GetColor(255, 255, 255), ScorebarFont);
+	sprintf(scorebar, "%-d", GetPlayerInfo(2));
+	DrawStringToHandle(447, 3, scorebar, GetColor(255, 255, 255), ScorebarFont);
+
+	/*DrawFormatString(73, 3, GetColor(255,255,255), "%08d", HighScore, ScorebarFont);
 	DrawFormatString(73, 30, GetColor(255, 255, 255), "%08d", Score, ScorebarFont);
 	DrawFormatString(211, 30, GetColor(255, 255, 255), "%08d", Graze, ScorebarFont);
-	DrawFormatString(447, 3, GetColor(255, 255, 255), "%-d", GetPlayerInfo(2), ScorebarFont);
+	DrawFormatString(447, 3, GetColor(255, 255, 255), "%-d", GetPlayerInfo(2), ScorebarFont);*/
 	if (Bombs < 5) {
 		//ƒ{ƒ€‚ª‚SŒÂˆÈ‰º
 		for (int i = 0; i < Bombs; i++) {
