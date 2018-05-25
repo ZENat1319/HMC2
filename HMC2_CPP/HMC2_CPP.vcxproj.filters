@@ -121,4 +121,7 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="E:\プロジェクト\Hina%27s Memory Collection\HMC2\仕様書.txt" />
+  </ItemGroup>
 </Project>

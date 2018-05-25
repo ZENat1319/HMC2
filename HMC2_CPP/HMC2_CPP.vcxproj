@@ -186,6 +186,9 @@
   <ItemGroup>
     <ClInclude Include="Somethings.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="E:\プロジェクト\Hina%27s Memory Collection\HMC2\仕様書.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
