@@ -40,6 +40,9 @@ int gpUpdateKey();
 void InitTitle(void);
 void TitleMain(void);
 
+void InitOption(void);
+void OptionMain(void);
+
 void GameInit(void);
 void GameMain(void);
 

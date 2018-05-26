@@ -68,7 +68,7 @@ void TitleKey(void) {
 		switch (CursorY) {
 		case 0:
 			//START
-			GameScene = 10;
+			GameScene = 5;
 			break;
 		case 100:
 			//EXIT
