@@ -12,8 +12,10 @@ int Bombs=3;
 int ScorebarFont;
 
 void ScoreInit(void) {
+	//画像読み込み
 	ScorebarImg = LoadGraph("res/img/scorebar.bmp");
 	BombIcon = LoadGraph("res/img/bomb_icon.bmp");
+	//フォントハンドルの登録
 	ScorebarFont = CreateFontToHandle("Source Han Serif", 14.5, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 }
 
@@ -23,19 +25,19 @@ void ScoreDraw(void) {
 
 	char scorebar[256];
 
+	//ハイスコア
 	sprintf(scorebar, "%08d", HighScore);
 	DrawStringToHandle(73,3,scorebar, GetColor(255, 255, 255),ScorebarFont);
+	//スコア
 	sprintf(scorebar, "%08d", Score);
 	DrawStringToHandle(73, 30, scorebar, GetColor(255, 255, 255), ScorebarFont);
+	//グレイズ
 	sprintf(scorebar, "%08d", Graze);
 	DrawStringToHandle(211, 30, scorebar, GetColor(255, 255, 255), ScorebarFont);
+	//パワー
 	sprintf(scorebar, "%-d", GetPlayerInfo(2));
 	DrawStringToHandle(447, 3, scorebar, GetColor(255, 255, 255), ScorebarFont);
-
-	/*DrawFormatString(73, 3, GetColor(255,255,255), "%08d", HighScore, ScorebarFont);
-	DrawFormatString(73, 30, GetColor(255, 255, 255), "%08d", Score, ScorebarFont);
-	DrawFormatString(211, 30, GetColor(255, 255, 255), "%08d", Graze, ScorebarFont);
-	DrawFormatString(447, 3, GetColor(255, 255, 255), "%-d", GetPlayerInfo(2), ScorebarFont);*/
+	//ボム
 	if (Bombs < 5) {
 		//ボムが４個以下
 		for (int i = 0; i < Bombs; i++) {

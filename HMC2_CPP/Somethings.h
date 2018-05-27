@@ -1,3 +1,4 @@
+//色々するヘッダファイル
 #ifndef HMC2_2_MAIN_HEADER
 #define HMC2_2_MAIN_HEADER
 
