@@ -10,7 +10,7 @@ int Next = 0;
 
 //ƒ^ƒCƒgƒ‹‰æ–Ê‰Šú‰»
 void InitTitle(void) {
-	TitleLogo = LoadGraph("res/img/title.bmp");
+	TitleLogo = LoadGraph("res/img/title.png");
 	MenuFont = CreateFontToHandle("UglyQua", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	MenuFont2 = CreateFontToHandle("Source Han Serif", 24, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	CursorY = 0;
