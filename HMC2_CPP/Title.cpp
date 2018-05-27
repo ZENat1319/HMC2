@@ -6,6 +6,7 @@ int TitleLogo;
 int CursorY;
 int PadOn = 0;
 int MenuFont,MenuFont2;
+int Next = 0;
 
 //ƒ^ƒCƒgƒ‹‰æ–Ê‰Šú‰»
 void InitTitle(void) {
@@ -68,6 +69,7 @@ void TitleKey(void) {
 		switch (CursorY) {
 		case 0:
 			//START
+			FadeIO(800, 600, 20);
 			GameScene = 5;
 			break;
 		case 100:

@@ -59,7 +59,10 @@ void OptionKey(void) {
 	//ÉJÅ[É\Éãà⁄ìÆ
 	if (PadOn2 == 0 && (Pad & PAD_INPUT_UP || Pad & PAD_INPUT_LEFT))SelectOption--;
 	if (PadOn2 == 0 && (Pad & PAD_INPUT_DOWN || Pad & PAD_INPUT_RIGHT))SelectOption++;
-	if (PadOn2 == 0 && Key[KEY_INPUT_ESCAPE] == 1)GameScene = 0;
+	if (PadOn2 == 0 && Key[KEY_INPUT_ESCAPE] == 1) { 
+		FadeIO(800,600,20);
+		GameScene = 0; 
+	}
 	if (SelectOption < 0)SelectOption = 2;
 	if (SelectOption > 2)SelectOption = 0;
 
