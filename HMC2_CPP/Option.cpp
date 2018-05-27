@@ -5,6 +5,9 @@ int SearchShotImg;
 int LaserShotImg;
 int OptionFont,OptionFont2;
 int SelectOption=0;
+int PadOn2 = 10;
+
+void OptionKey(void);
 
 void InitOption(void) {
 	//âÊëúì«Ç›çûÇ›
@@ -45,4 +48,26 @@ void OptionMain(void) {
 	DrawStringToHandle(13, 69 + 189, "WIDE SHOT", GetColor(255, 255, 255), OptionFont);
 	DrawStringToHandle(274, 206 + 189, "SEARCH SHOT", GetColor(255, 255, 255), OptionFont);
 	DrawStringToHandle(535, 342 + 189, "LASER SHOT", GetColor(255, 255, 255), OptionFont);
+
+	OptionKey();
+}
+
+void OptionKey(void) {
+	int Pad;
+	Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);
+
+	//ÉJÅ[É\Éãà⁄ìÆ
+	if (PadOn2 == 0 && (Pad & PAD_INPUT_UP || Pad & PAD_INPUT_LEFT))SelectOption--;
+	if (PadOn2 == 0 && (Pad & PAD_INPUT_DOWN || Pad & PAD_INPUT_RIGHT))SelectOption++;
+	if (PadOn2 == 0 && Key[KEY_INPUT_ESCAPE] == 1)GameScene = 0;
+	if (SelectOption < 0)SelectOption = 2;
+	if (SelectOption > 2)SelectOption = 0;
+
+	if (PadOn2 == 0 && Pad&PAD_INPUT_A || Key[KEY_INPUT_RETURN] == 1) {
+		//START
+		GameScene = 10;
+	}
+
+	if (Pad != 0)PadOn2++;
+	if (Pad == 0)PadOn2 = 0;
 }
