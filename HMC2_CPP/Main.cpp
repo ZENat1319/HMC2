@@ -1,6 +1,7 @@
 #include "Somethings.h"
 
 int GameScene = 0;
+int bright = 0;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {

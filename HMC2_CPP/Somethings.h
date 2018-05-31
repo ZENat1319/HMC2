@@ -13,6 +13,7 @@ extern int Key[256];
 extern int Score;
 extern int HighScore;
 extern int Graze;
+extern int bright;
 
 extern struct Chara
 {
@@ -37,7 +38,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 int FontLoad(void);
 
 int gpUpdateKey();
-bool FadeIO(int, int, int);
+bool FadeIn(int, int, int);
+bool FadeOut(int, int, int);
 
 void InitTitle(void);
 void TitleMain(void);

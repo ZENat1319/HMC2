@@ -18,6 +18,9 @@ void InitTitle(void) {
 
 //タイトルメイン
 void TitleMain(void) {
+	SetDrawBright(bright, bright, bright);
+	DrawBox(0, 0, 800, 600, 0, true);
+	if (bright<256)bright += 5;
 	//gpUpdateKey();
 	//ロゴ描画
 	DrawGraph(350,200,TitleLogo,TRUE);
@@ -69,7 +72,8 @@ void TitleKey(void) {
 		switch (CursorY) {
 		case 0:
 			//START
-			FadeIO(800, 600, 20);
+			FadeIn(800, 600, 20);
+			bright = 0;
 			GameScene = 5;
 			break;
 		case 100:

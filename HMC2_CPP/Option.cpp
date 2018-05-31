@@ -20,6 +20,9 @@ void InitOption(void) {
 }
 
 void OptionMain(void) {
+	SetDrawBright(bright, bright, bright);
+	DrawBox(0, 0, 800, 600, 0, true);
+	if(bright<256)bright+=5;
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 128);
 	//ワイドショット
 	if (!SelectOption == 0) {
@@ -60,7 +63,8 @@ void OptionKey(void) {
 	if (PadOn2 == 0 && (Pad & PAD_INPUT_UP || Pad & PAD_INPUT_LEFT))SelectOption--;
 	if (PadOn2 == 0 && (Pad & PAD_INPUT_DOWN || Pad & PAD_INPUT_RIGHT))SelectOption++;
 	if (PadOn2 == 0 && Key[KEY_INPUT_ESCAPE] == 1) { 
-		FadeIO(800,600,20);
+		FadeIn(800,600,20);
+		bright = 0;
 		GameScene = 0; 
 	}
 	if (SelectOption < 0)SelectOption = 2;
