@@ -18,10 +18,11 @@ void InitTitle(void) {
 
 //タイトルメイン
 void TitleMain(void) {
+	//フェードイン処理
 	SetDrawBright(bright, bright, bright);
 	DrawBox(0, 0, 800, 600, 0, true);
 	if (bright<256)bright += 5;
-	//gpUpdateKey();
+
 	//ロゴ描画
 	DrawGraph(350,200,TitleLogo,TRUE);
 
