@@ -2,12 +2,15 @@
 
 //フェードするやつ
 bool FadeIn(int WIwin, int HEwin, int num) {
-	for (int i = 0; ScreenFlip() == 0 && ProcessMessage() == 0 && i < num; i+=5) {
-		SetDrawBlendMode(DX_BLENDMODE_ALPHA, 10);
-		DrawBox(0, 0, WIwin, HEwin, 0, true);
+	for (static int i = 0;i < num; i+=5) {
+		//SetDrawBlendMode(DX_BLENDMODE_ALPHA, 10);
+		SetDrawBright(255-i,255-i,255-i);
+		//DrawBox(0, 0, WIwin, HEwin, 0, true);
+		if (i < 255)return true;
 	}
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
-	return true;
+	SetDrawBright(255, 255, 255);
+	return false;
 }
 
 bool FadeOut(int WIwin, int HEwin, int num) {

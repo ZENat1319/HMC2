@@ -2,11 +2,12 @@
 
 void TitleKey(void);
 
-int TitleLogo;
-int CursorY;
-int PadOn = 0;
-int MenuFont,MenuFont2;
-int Next = 0;
+static int TitleLogo;
+static int CursorY;
+static int PadOn = 0;
+static int MenuFont,MenuFont2;
+bool FadeIO;	//true:fade in, false:fade out
+bool FadeEnd;
 
 //タイトル画面初期化
 void InitTitle(void) {
@@ -14,14 +15,30 @@ void InitTitle(void) {
 	MenuFont = CreateFontToHandle("UglyQua", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	MenuFont2 = CreateFontToHandle("Source Han Serif", 24, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	CursorY = 0;
+	FadeIO = true;
+	FadeEnd = false;
 }
 
 //タイトルメイン
 void TitleMain(void) {
-	//フェードイン処理
-	SetDrawBright(bright, bright, bright);
-	DrawBox(0, 0, 800, 600, 0, true);
-	if (bright<256)bright += 5;
+	//フェードインアウト処理
+	if (FadeIO == true) {
+		SetDrawBright(bright, bright, bright);
+		DrawBox(0, 0, 800, 600, 0, true);
+		if (bright <= 256) {
+			FadeEnd = false;
+			bright += 5;
+		}else FadeEnd = true;
+	}
+	else {
+		SetDrawBright(bright, bright, bright);
+		DrawBox(0, 0, 800, 600, 0, true);
+		if (bright >= 0) { 
+			FadeEnd = false;
+			bright -= 5; 
+		}
+		else FadeEnd = true;
+	}
 
 	//ロゴ描画
 	DrawGraph(350,200,TitleLogo,TRUE);
@@ -61,21 +78,21 @@ void TitleMain(void) {
 void TitleKey(void) {
 	int Pad;
 	Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-
 	//カーソル移動
-	if (PadOn == 0 && Pad & PAD_INPUT_UP)CursorY -= 25;
-	if (PadOn == 0 && Pad & PAD_INPUT_DOWN)CursorY += 25;
-	if (PadOn == 0 && Key[KEY_INPUT_ESCAPE] == 1)CursorY = 100;
-	if (CursorY > 100)CursorY = 0;
-	if (CursorY < 0)CursorY = 100;
+	if (FadeEnd) {
+		if (PadOn == 0 && Pad & PAD_INPUT_UP)CursorY -= 25;
+		if (PadOn == 0 && Pad & PAD_INPUT_DOWN)CursorY += 25;
+		if (PadOn == 0 && Key[KEY_INPUT_ESCAPE] == 1)CursorY = 100;
+		if (CursorY > 100)CursorY = 0;
+		if (CursorY < 0)CursorY = 100;
+	}
 
-	if (PadOn == 0 && Pad&PAD_INPUT_A|| Key[KEY_INPUT_RETURN] == 1) {
+	if (FadeEnd==true&&PadOn == 0 && Pad&PAD_INPUT_A|| Key[KEY_INPUT_RETURN] == 1) {
 		switch (CursorY) {
 		case 0:
 			//START
-			FadeIn(800, 600, 20);
-			bright = 0;
-			GameScene = 5;
+			FadeIO = false;
+			if (FadeEnd==true)GameScene = 5;
 			break;
 		case 100:
 			//EXIT
