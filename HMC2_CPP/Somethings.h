@@ -5,7 +5,7 @@
 #include <DxLib.h>
 #include <stdio.h>
 #include <string>
-#include "Stages.h"
+#include "Scenes.h"
 
 #define PI 3.141592653589793
 

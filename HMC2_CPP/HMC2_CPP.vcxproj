@@ -189,7 +189,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Somethings.h" />
-    <ClInclude Include="Stages.h" />
+    <ClInclude Include="Scenes.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="E:\プロジェクト\Hina%27s Memory Collection\HMC2\仕様書.txt" />

@@ -132,7 +132,7 @@
     <ClInclude Include="Somethings.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Stages.h">
+    <ClInclude Include="Scenes.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
