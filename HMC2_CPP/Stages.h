@@ -1,4 +1,5 @@
 #pragma once
+//ƒV[ƒ“‚Ì‚ ‚êA”Ô†
 enum Scene{
 	SC_OPENING,
 	SC_TITLE,
