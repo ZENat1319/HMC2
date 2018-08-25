@@ -2,12 +2,10 @@
 
 void TitleKey(void);
 
-static int TitleLogo;
-static int CursorY;
-static int PadOn = 0;
-static int MenuFont,MenuFont2;
-bool FadeIO;	//true:fade in, false:fade out
-bool FadeEnd;
+int TitleLogo;
+int CursorY;
+int PadOn = 0;
+int MenuFont,MenuFont2;
 
 //タイトル画面初期化
 void InitTitle(void) {
@@ -15,30 +13,25 @@ void InitTitle(void) {
 	MenuFont = CreateFontToHandle("UglyQua", 30, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	MenuFont2 = CreateFontToHandle("Source Han Serif", 24, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 	CursorY = 0;
-	FadeIO = true;
-	FadeEnd = false;
 }
 
 //タイトルメイン
 void TitleMain(void) {
-	//フェードインアウト処理
-	if (FadeIO == true) {
-		SetDrawBright(bright, bright, bright);
-		DrawBox(0, 0, 800, 600, 0, true);
-		if (bright <= 256) {
-			FadeEnd = false;
-			bright += 5;
-		}else FadeEnd = true;
-	}
-	else {
-		SetDrawBright(bright, bright, bright);
-		DrawBox(0, 0, 800, 600, 0, true);
-		if (bright >= 0) { 
-			FadeEnd = false;
-			bright -= 5; 
-		}
-		else FadeEnd = true;
-	}
+	////シーンチェンジ後のフェード対策
+	//if (GrobalSceneChange) {
+	//	GrobalSceneChange = false;
+	//	FadeEnd = false;
+	//	FadeIO = true;
+	//}
+	////フェードインアウト処理
+	//if (FadeIO) {
+	//	//明るくなる方
+	//	/*if (!FadeEnd)*/FadeEnd = FadeIn(800, 600, 10);
+	//}
+	//else {
+	//	//暗くなる方
+	//	/*if (!FadeEnd)*/FadeEnd = FadeOut(800, 600, 10);
+	//}
 
 	//ロゴ描画
 	DrawGraph(350,200,TitleLogo,TRUE);
@@ -77,29 +70,36 @@ void TitleMain(void) {
 
 void TitleKey(void) {
 	int Pad;
+	static int NextScene;
+	static bool SceneChange = false;
 	Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);
-	//カーソル移動
-	if (FadeEnd) {
+	//カーソル移動 
+	//if (FadeEnd) {
 		if (PadOn == 0 && Pad & PAD_INPUT_UP)CursorY -= 25;
 		if (PadOn == 0 && Pad & PAD_INPUT_DOWN)CursorY += 25;
 		if (PadOn == 0 && Key[KEY_INPUT_ESCAPE] == 1)CursorY = 100;
 		if (CursorY > 100)CursorY = 0;
 		if (CursorY < 0)CursorY = 100;
-	}
+	//}
 
-	if (FadeEnd==true&&PadOn == 0 && Pad&PAD_INPUT_A|| Key[KEY_INPUT_RETURN] == 1) {
+	if ((PadOn == 0 && Pad&PAD_INPUT_A) || (Key[KEY_INPUT_RETURN] == 1)) {
 		switch (CursorY) {
 		case 0:
 			//START
-			FadeIO = false;
-			if (FadeEnd==true)GameScene = 5;
+			SceneChange = true;
+			NextScene = SC_OPTION;
 			break;
 		case 100:
 			//EXIT
-			GameScene = 99;
+			SceneChange = true;
+			NextScene = SC_ENDFUCK;
 			break;
 		}
 	}
+
+	//シーンチェンジ
+	if(SceneChange)GameScene = NextScene;
+
 	if (Pad != 0)PadOn++;
 	if (Pad == 0)PadOn = 0;
 }

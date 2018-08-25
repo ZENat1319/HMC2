@@ -5,15 +5,19 @@
 #include <DxLib.h>
 #include <stdio.h>
 #include <string>
+#include "Stages.h"
 
 #define PI 3.141592653589793
 
 extern int GameScene;
+//static bool GrobalSceneChange;
 extern int Key[256];
 extern int Score;
 extern int HighScore;
 extern int Graze;
 extern int bright;
+//static bool FadeIO = true;	//true:fade in, false:fade out
+//static bool FadeEnd = false;
 
 extern struct Chara
 {
@@ -40,6 +44,8 @@ int FontLoad(void);
 int gpUpdateKey();
 bool FadeIn(int, int, int);
 bool FadeOut(int, int, int);
+
+void DrawFps(void);
 
 void InitTitle(void);
 void TitleMain(void);

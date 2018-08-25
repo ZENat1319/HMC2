@@ -10,6 +10,7 @@ void GameInit(void) {
 }
 
 void GameMain() {
+	SetDrawBright(255, 255, 255);
 	PlayerDo();
 
 	ScoreDraw();

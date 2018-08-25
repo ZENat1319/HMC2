@@ -19,11 +19,21 @@ void InitOption(void) {
 	OptionFont2 = CreateFontToHandle("Source Han Serif", 44, 3, DX_FONTTYPE_ANTIALIASING_EDGE);
 }
 
+//装備メイン
 void OptionMain(void) {
-	//フェードイン処理
-	SetDrawBright(bright, bright, bright);
-	DrawBox(0, 0, 800, 600, 0, true);
-	if(bright<256)bright+=5;
+	////シーンチェンジ後のフェード対策
+	//if (GrobalSceneChange) {
+	//	GrobalSceneChange = false;
+	//	FadeEnd = false;
+	//	FadeIO = true;
+	//}
+	////フェードイン処理
+	//if (FadeIO) {
+	//	/*if (!FadeEnd)*/FadeEnd = FadeIn(800, 600, 10);
+	//}
+	//else {
+	//	/*if (!FadeEnd)*/FadeEnd = FadeOut(800, 600, 10);
+	//}
 
 	SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 128);
 	//ワイドショット
@@ -59,23 +69,28 @@ void OptionMain(void) {
 
 void OptionKey(void) {
 	int Pad;
+	static int NextScene;
+	static bool SceneChange = false;
 	Pad = GetJoypadInputState(DX_INPUT_KEY_PAD1);
 
 	//カーソル移動
 	if (PadOn2 == 0 && (Pad & PAD_INPUT_UP || Pad & PAD_INPUT_LEFT))SelectOption--;
 	if (PadOn2 == 0 && (Pad & PAD_INPUT_DOWN || Pad & PAD_INPUT_RIGHT))SelectOption++;
-	if (PadOn2 == 0 && Key[KEY_INPUT_ESCAPE] == 1) { 
-		FadeIn(800,600,20);	//あまりきれいとは言えないフェードアウト
-		bright = 0;
-		GameScene = 0; 
+	if (PadOn2 == 0 && (Key[KEY_INPUT_ESCAPE] == 1||Pad&PAD_INPUT_START)) { 
+		SceneChange = true;
+		NextScene = SC_TITLE;
 	}
 	if (SelectOption < 0)SelectOption = 2;
 	if (SelectOption > 2)SelectOption = 0;
 
 	if (PadOn2 == 0 && Pad&PAD_INPUT_A || Key[KEY_INPUT_RETURN] == 1) {
 		//START
-		GameScene = 10;
+		SceneChange = true;
+		NextScene = SC_GAME;
 	}
+
+	//シーンチェンジ
+	if(SceneChange)GameScene = NextScene;
 
 	if (Pad != 0)PadOn2++;
 	if (Pad == 0)PadOn2 = 0;

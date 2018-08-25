@@ -1,7 +1,8 @@
 #include "Somethings.h"
 
 int GameScene = 0;
-int bright = 0;
+int bright = 255;
+int GrobalSceneChage = false;
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -32,31 +33,33 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	InitOption();
 	GameInit();
 
+	GameScene = SC_TITLE;
 
+	//めいんるうぷ
 	while (ProcessMessage() == 0 && gpUpdateKey()==0)
 	{
 		ClearDrawScreen();//裏画面消す
 		SetDrawScreen(DX_SCREEN_BACK);//描画先を裏画面に
 
 		switch (GameScene) {
-		case 0:
+		case SC_TITLE:
 			//タイトル画面
 			TitleMain();
 			break;
-		case 5:
+		case SC_OPTION:
 			//装備選択画面
 			OptionMain();
 			break;
-		case 10:
+		case SC_GAME:
 			//ゲーム画面(予定)
 			GameMain();
 			break;
-		case 99:
+		case SC_ENDFUCK:
 			//強制終了
 			goto EndbyAdmin;
 			break;
 		}
-		
+		DrawFps();
 
 		ScreenFlip();//裏画面を表画面にコピー
 	}
