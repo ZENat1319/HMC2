@@ -47,6 +47,7 @@ bool FadeOut(int, int, int);
 
 void DrawFps(void);
 
+void LoadInit(void);
 void LoadMain(int);
 
 void InitTitle(void);
