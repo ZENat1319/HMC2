@@ -10,23 +10,24 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	//起動時質問
 	/*if (MessageBox(NULL, "フルスクリーンで起動しますか？\nはい(フルスクリーン)いいえ(ウインドウ)",
-		"しつもん！", MB_YESNO) == IDYES) {
-		ChangeWindowMode(FALSE);//全画面にセット
-		SetGraphMode(800, 600, 32);//画面サイズ指定
+	"しつもん！", MB_YESNO) == IDYES) {
+	ChangeWindowMode(FALSE);//全画面にセット
+	SetGraphMode(800, 600, 32);//画面サイズ指定
 	}
 	else {*/
-		ChangeWindowMode(TRUE);//非全画面にセット
-		SetGraphMode(800, 600, 32);//画面サイズ指定
-	//}
+	ChangeWindowMode(TRUE);//非全画面にセット
+	SetGraphMode(800, 600, 32);//画面サイズ指定
+							   //}
 
 	SetOutApplicationLogValidFlag(FALSE);//Log.txtを生成しないように設定
 	if (DxLib_Init() == 1) { return -1; }//初期化に失敗時にエラーを吐かせて終了
 
-	//フォント読み込み
+										 //フォント読み込み
 	if (!FontLoad()) {
 		DxLib_End();
 		return 0;
 	}
+	SetDrawScreen(DX_SCREEN_BACK);//描画先を裏画面に
 
 	//初期化でもしておこう
 	InitTitle();
@@ -36,10 +37,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	GameScene = SC_TITLE;
 
 	//めいんるうぷ
-	while (ProcessMessage() == 0 && gpUpdateKey()==0)
+	while (ScreenFlip() == 0 && ProcessMessage() == 0 && gpUpdateKey() == 0)
 	{
-		ClearDrawScreen();//裏画面消す
-		SetDrawScreen(DX_SCREEN_BACK);//描画先を裏画面に
+		ClearDrawScreen();	//こいつだけは単体でしか動かない
 
 		switch (GameScene) {
 		case SC_TITLE:
@@ -60,10 +60,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 			break;
 		}
 		DrawFps();
-
-		ScreenFlip();//裏画面を表画面にコピー
 	}
-	EndbyAdmin:
+EndbyAdmin:
 	DxLib_End();
 	return 0;
+}
+
+int ProgramInit(void) {
+	//フォント読み込み
+	if (!FontLoad()) {
+		DxLib_End();
+		return -1;
+	}
+
+	//初期化でもしておこう
+	InitTitle();
+	InitOption();
+	GameInit();
+	return 0;
+}
+
+void LoadMain(int Next) {
+	if (GetASyncLoadNum() == 0)GameScene = Next;
 }

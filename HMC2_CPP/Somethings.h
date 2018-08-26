@@ -47,6 +47,8 @@ bool FadeOut(int, int, int);
 
 void DrawFps(void);
 
+void LoadMain(int);
+
 void InitTitle(void);
 void TitleMain(void);
 
@@ -55,6 +57,9 @@ void OptionMain(void);
 
 void GameInit(void);
 void GameMain(void);
+
+void StageInit(int);
+void StageMain(void);
 
 void PlayerInit(void);
 void ShotInit(void);

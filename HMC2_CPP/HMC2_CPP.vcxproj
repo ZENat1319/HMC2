@@ -156,6 +156,7 @@
     <ClCompile Include="Option.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Score.cpp" />
+    <ClCompile Include="Stages.cpp" />
     <ClCompile Include="Title.cpp" />
   </ItemGroup>
   <ItemGroup>
