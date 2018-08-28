@@ -1,9 +1,8 @@
 #include "Somethings.h"
 
-int GameScene = 0;
+int GameScene = 0,LdNextScene=0;
 int bright = 255;
 int GrobalSceneChage = false;
-int NextScene;
 int ProgramInit(void);
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
@@ -41,7 +40,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	ProgramInit();
 
 	GameScene = SC_INIT;
-	NextScene = SC_TITLE;
+	LdNextScene = SC_TITLE;
 
 	//めいんるうぷ
 	while (ScreenFlip() == 0 && ProcessMessage() == 0 && gpUpdateKey() == 0)
@@ -51,7 +50,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		switch (GameScene) {
 		case SC_INIT:
 			//ロード画面
-			LoadMain(NextScene);
+			LoadMain(LdNextScene);
 			break;
 		case SC_TITLE:
 			//タイトル画面

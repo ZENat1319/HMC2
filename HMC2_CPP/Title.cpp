@@ -87,18 +87,20 @@ void TitleKey(void) {
 		case 0:
 			//START
 			SceneChange = true;
-			NextScene = SC_OPTION;
+			LdNextScene = SC_OPTION;
 			break;
 		case 100:
 			//EXIT
 			SceneChange = true;
-			NextScene = SC_ENDFUCK;
+			LdNextScene = SC_ENDFUCK;
 			break;
 		}
 	}
 
 	//シーンチェンジ
-	if(SceneChange)GameScene = NextScene;
+	if (SceneChange) { 
+		GameScene = LdNextScene;
+	}
 
 	if (Pad != 0)PadOn++;
 	if (Pad == 0)PadOn = 0;

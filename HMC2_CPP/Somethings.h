@@ -10,6 +10,7 @@
 #define PI 3.141592653589793
 
 extern int GameScene;
+extern int LdNextScene;
 //static bool GrobalSceneChange;
 extern int Key[256];
 extern int Score;
